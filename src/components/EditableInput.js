@@ -27,6 +27,7 @@ const Editableinput = ({
     if (trimmed !== initialValue) {
       await onSave(trimmed);
     }
+    setIsEditable(false);
   };
   return (
     <div>

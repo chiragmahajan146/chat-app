@@ -4,6 +4,7 @@ import AvatarEditor from 'react-avatar-editor';
 import { useModelState } from '../../misc/custom-hooks';
 import { database, storage } from '../../misc/firebase';
 import { useProfile } from '../../context/profile.context';
+import ProfileAvatar from '../ProfileAvatar';
 
 const fileInputType = '.png, .jpeg, .jpg';
 const acceptedFileType = ['image/png', 'image/jpeg', 'image/pjpeg'];
@@ -55,7 +56,7 @@ const AvatarUploadBtn = () => {
       });
       const downloadUrl = await uploadAvatarResult.ref.getDownloadURL();
       const userAvatarRef = database
-        .ref(`/profile/${profile.uid}`)
+        .ref(`/profiles/${profile.uid}`)
         .child('avatar');
       userAvatarRef.set(downloadUrl);
       setIsLoading(false);
@@ -68,6 +69,11 @@ const AvatarUploadBtn = () => {
 
   return (
     <div className="mt-3 text-center">
+      <ProfileAvatar
+        src={profile.avatar}
+        name={profile.name}
+        className="width-200 height-200 img-fullsize font-huge"
+      />
       <div>
         <label
           htmlFor="avatar-upload"
@@ -79,11 +85,11 @@ const AvatarUploadBtn = () => {
             type="file"
             className="d-none"
             accept={fileInputType}
-            onChange={onFileInputChange()}
+            onChange={onFileInputChange}
           />
         </label>
 
-        <Modal show={isOpen} onhide={close}>
+        <Modal show={isOpen} onHide={close}>
           <Modal.Header>
             <Modal.Title>Adjust and upload new avatar</Modal.Title>
           </Modal.Header>
