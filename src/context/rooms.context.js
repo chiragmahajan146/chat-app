@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { database } from '../misc/firebase';
-import { transformaToArrWithId } from '../misc/helpers';
+import { transformToArrWithId } from '../misc/helpers';
 
 const RoomsContext = createContext();
 
@@ -11,7 +11,7 @@ export const RoomsProvider = ({ children }) => {
     const roomListRef = database.ref('rooms');
 
     roomListRef.on('value', snap => {
-      const data = transformaToArrWithId(snap.val());
+      const data = transformToArrWithId(snap.val());
       setRooms(data);
     });
 
